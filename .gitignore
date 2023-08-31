@@ -1,0 +1,25 @@
+# .gitignore
+# Ignore everything
+*
+# But not these files...
+!/.gitignore
+
+!*.yaml
+!*.json
+!*.txt
+!/**/templates/_helpers.tpl
+!*.md
+!*.helmignore
+!*.pem
+!*.tfvars
+!*.tf
+
+!CODEOWNERS
+!LICENSE
+!.tflint.hcl
+
+# ...even if they are in subdirectories
+!*/
+
+# . files/folders do not seem to be ignored by the catch all
+**/.terraform

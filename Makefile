@@ -12,3 +12,5 @@ tfmt:
 	terraform fmt -recursive
 
 check: tfmt tflint tfsec
+	terraform init
+	terraform validate
