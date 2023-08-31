@@ -1,0 +1,62 @@
+name: "Terraform Linting Checks"
+
+on:
+  - push
+
+jobs:
+  terraform-linters:
+    name: "Terraform Linters"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+      # reference - https://github.com/hashicorp/setup-terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: v1.4.6
+
+      # Checks that all Terraform configuration files adhere to a canonical format
+      - name: Terraform Format
+        run: terraform fmt -check
+
+      - uses: actions/cache@v3
+        name: Cache TFLint plugins
+        with:
+          path: ~/.tflint.d/plugins
+          key: ubuntu-latest-tflint-${{ hashFiles('.tflint.hcl') }}
+
+      - uses: terraform-linters/setup-tflint@v3
+        name: Setup TFLint
+        with:
+          tflint_version: v0.47.0
+
+      - name: Run TFLint
+        run: |
+          tflint --init
+          tflint --version
+          tflint -f compact --recursive
+        env:
+          # https://github.com/terraform-linters/tflint/blob/master/docs/user-guide/plugins.md#avoiding-rate-limiting
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Run Tfsec
+        uses: aquasecurity/tfsec-action@v1.0.3
+
+      # Run Checkov against configuration
+      - name: Infra Policy Evaluation
+        uses: bridgecrewio/checkov-action@master
+        with:
+          quiet: true
+          framework: terraform
+          container_user: 1000
+          output_format: github_failed_only
+          soft_fail: false
+      #    skip_check: SKIP1,SKIP2,SKIP3,SKIPN -- add skipped checks here
