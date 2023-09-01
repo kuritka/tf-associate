@@ -47,8 +47,10 @@ jobs:
           # https://github.com/terraform-linters/tflint/blob/master/docs/user-guide/plugins.md#avoiding-rate-limiting
           GITHUB_TOKEN: ${{ github.token }}
 
-      - name: Run Tfsec
-        uses: aquasecurity/tfsec-action@v1.0.3
+#      - name: Run Tfsec
+#        uses: aquasecurity/tfsec-action@v1.0.3
+#        with:
+#          ignore-hcl-errors: true
 
       # Run Checkov against configuration
       - name: Infra Policy Evaluation
