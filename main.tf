@@ -5,26 +5,12 @@ locals {
   }
 }
 
-resource "kubernetes_namespace" "us_east_1c" {
-  metadata {
-    annotations = local.common_annotations
-    labels      = {}
-    name        = "us-east-1c"
-  }
-}
-
-resource "kubernetes_namespace" "us_east_1b" {
-  metadata {
-    annotations = local.common_annotations
-    labels      = {}
-    name        = "us-east-1b"
-  }
-}
-
-resource "kubernetes_namespace" "us_east_1a" {
-  metadata {
-    annotations = local.common_annotations
-    labels      = {}
-    name        = "us-east-1a"
-  }
+module "cluster" {
+  source  = "./modules/k8s"
+  region  = var.region
+  context = var.context
+  annotations = merge(local.common_annotations, {
+    "kuritka.io/environment" = var.environment,
+    "kuritka.io/region"      = var.region
+  })
 }

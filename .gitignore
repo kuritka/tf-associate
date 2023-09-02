@@ -17,6 +17,7 @@
 !CODEOWNERS
 !LICENSE
 !.tflint.hcl
+!.gitkeep
 
 # ...even if they are in subdirectories
 !*/

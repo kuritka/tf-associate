@@ -16,5 +16,4 @@ check: tfmt tflint tfsec
 	terraform init
 	terraform validate
 
-include ./colima.mk
-
+include ./.platform/colima.mk
