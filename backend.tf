@@ -1,8 +1,8 @@
-terraform {
-  cloud {
-    organization = "kuritka-test"
-    workspaces {
-      name = "ta-dev"
-    }
-  }
-}
+# terraform {
+#  cloud {
+#    organization = "kuritka-test"
+#    workspaces {
+#      name = "ta-dev"
+#    }
+#  }
+#}
