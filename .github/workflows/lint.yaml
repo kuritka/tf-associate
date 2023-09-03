@@ -3,6 +3,10 @@ name: "Terraform Linting Checks"
 on:
   - push
 
+env:
+  TF_LOG: Info
+  TF_INPUT: false
+
 jobs:
   terraform-linters:
     name: "Terraform Linters"

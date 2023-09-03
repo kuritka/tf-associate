@@ -4,10 +4,10 @@ variable "annotations" {
   description = "The annotations to use for kubectl"
 }
 
-variable "context" {
-  type        = string
-  description = "The context to use for kubectl [k3d-east, k3d-west]"
-}
+#variable "context" {
+#  type        = string
+#  description = "The context to use for kubectl [k3d-east, k3d-west]"
+#}
 
 variable "region" {
   type        = string
