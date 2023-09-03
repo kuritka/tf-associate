@@ -10,6 +10,7 @@ terraform {
 }
 
 provider "kubernetes" {
-  config_path    = "~/.kube/config"
+  #  terraform plan runs in terraform cloud and doesn't have access to the kubeconfig file
+  #  config_path    = "~/.kube/config"
   config_context = var.context
 }
