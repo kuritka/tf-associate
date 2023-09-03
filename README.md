@@ -87,3 +87,44 @@ import {
   id = "us-east-1c"
 }
 ```
+
+# 3 - Backend in Kubernetes Cluster
+I tried terraform cloud. Unfortunately it is unusable for demos on local k3d clusters. The problem is that the `terraform plan` 
+runs on a host machine that can't connect to my local clusters.  If the demo was in AWS it would be a very good choice, due to 
+the wide range of workspace settings, Variable sets and integration with github workflows.
+To continue my demo on local k8s clusters - without AWS, I decided to use a local k8s cluster as a backend.
+
+- https://developer.hashicorp.com/terraform/language/settings/backends/kubernetes
+- 
+```tf
+terraform {
+  backend "kubernetes" {
+    secret_suffix    = "state"
+    config_path      = "~/.kube/config"
+    namespace        = "backend-state"
+    config_context   = "k3d-backend"
+  }
+}
+```
+
+Backend state is stored as base64 encoded string in a secret
+```shell
+# move state to backend
+❯ terraform init 
+
+
+❯ k get secrets -A  --context=k3d-backend
+NAMESPACE       NAME                                     TYPE                DATA   AGE
+kube-system     k3s-serving                              kubernetes.io/tls   2      5m37s
+kube-system     k3d-backend-server-0.node-password.k3s   Opaque              1      5m36s
+kube-system     k3d-backend-agent-0.node-password.k3s    Opaque              1      5m32s
+backend-state   tfstate-default-state                    Opaque              1      60s
+
+
+❯ terraform plan -var-file=us-east.tfvars -out=us-east.tfplan
+module.cluster.kubernetes_namespace.us_east_1a: Refreshing state... [id=us-east-1a]
+module.cluster.kubernetes_namespace.us_east_1c: Refreshing state... [id=us-east-1c]
+module.cluster.kubernetes_namespace.us_east_1b: Refreshing state... [id=us-east-1b]
+```
+
+_* For reverting back to local state follow these instructions: https://github.com/hashicorp/terraform/issues/33214#issuecomment-1553223031_ 
