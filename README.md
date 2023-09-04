@@ -128,3 +128,26 @@ module.cluster.kubernetes_namespace.us_east_1b: Refreshing state... [id=us-east-
 ```
 
 _* For reverting back to local state follow these instructions: https://github.com/hashicorp/terraform/issues/33214#issuecomment-1553223031_ 
+
+
+# 4 - Mutiple environments
+
+![Screenshot 2023-09-04 at 10 59 18](https://github.com/kuritka/_helper/assets/7195836/839ca7ba-d2f4-4b93-b2e8-bd5042a02404)
+
+- https://cloudcasts.io/course/terraform/environment-directories
+
+Multiple environments can be done between git branches / folders / repos / workspaces (short-living). I chose the easiest way but a bit more difficult to maintain. Each environment or cluster has its own configuration and backend state. It is possible to extract tfvars and backend configurations to root , but terraform init will then require the `-chdir` argument
+
+![Screenshot 2023-09-04 at 11 00 07](https://github.com/kuritka/_helper/assets/7195836/6057763c-8beb-493c-a141-4939130cc628)
+
+
+```shell
+# init migrate to backend automatically and clean terraform.tfstate
+terraform init 
+terraform plan -var-file=eu-west.tfvars -out=.out.tfplan
+terraform apply .out.tfplan
+
+...
+terraform plan -var-file=us-east.tfvars -out=.out.tfplan
+...
+```

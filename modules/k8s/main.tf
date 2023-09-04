@@ -1,4 +1,4 @@
-resource "kubernetes_namespace" "us_east_1c" {
+resource "kubernetes_namespace" "one" {
   metadata {
     annotations = var.annotations
     labels      = {}
@@ -6,7 +6,7 @@ resource "kubernetes_namespace" "us_east_1c" {
   }
 }
 
-resource "kubernetes_namespace" "us_east_1b" {
+resource "kubernetes_namespace" "two" {
   metadata {
     annotations = var.annotations
     labels      = {}
@@ -14,7 +14,7 @@ resource "kubernetes_namespace" "us_east_1b" {
   }
 }
 
-resource "kubernetes_namespace" "us_east_1a" {
+resource "kubernetes_namespace" "three" {
   metadata {
     annotations = var.annotations
     labels      = {}

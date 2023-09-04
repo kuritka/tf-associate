@@ -11,7 +11,7 @@ terraform {
   backend "kubernetes" {
     secret_suffix  = "state"
     config_path    = "~/.kube/config"
-    namespace      = "backend-state"
+    namespace      = "backend-state-east"
     config_context = "k3d-backend"
   }
 }

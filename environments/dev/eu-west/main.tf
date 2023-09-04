@@ -6,7 +6,7 @@ locals {
 }
 
 module "cluster" {
-  source  = "./modules/k8s"
+  source  = "../../../modules/k8s"
   region  = var.region
   context = var.context
   annotations = merge(local.common_annotations, {
