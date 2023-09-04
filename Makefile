@@ -13,7 +13,9 @@ tfmt:
 	terraform fmt -recursive
 
 check: tfmt tflint tfsec
-	terraform init
-	terraform validate
+	terraform -chdir=./environments/dev/eu-west/ init
+	terraform -chdir=./environments/dev/eu-west/ validate
+	terraform -chdir=./environments/dev/us-east/ init
+	terraform -chdir=./environments/dev/us-east/ validate
 
 include ./.platform/colima.mk
