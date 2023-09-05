@@ -7,12 +7,12 @@ terraform {
       version = ">= 1.11.3"
     }
   }
-  #  backend "kubernetes" {
-  #    secret_suffix  = "state"
-  #    config_path    = "~/.kube/config"
-  #    namespace      = "backend-workspace"
-  #    config_context = "k3d-backend"
-  #  }
+  backend "kubernetes" {
+    secret_suffix  = "state"
+    config_path    = "~/.kube/config"
+    namespace      = "backend-workspace"
+    config_context = "k3d-backend"
+  }
 }
 
 

@@ -151,6 +151,7 @@ terraform apply .out.tfplan
 terraform plan -var-file=us-east.tfvars -out=.out.tfplan
 ...
 ```
+The problem is it is not DRY!  
 
 # 5 - workspaces
 
