@@ -151,3 +151,27 @@ terraform apply .out.tfplan
 terraform plan -var-file=us-east.tfvars -out=.out.tfplan
 ...
 ```
+
+# 5 - workspaces
+
+# workspace
+Thanks to workspace I can physically create more statefiles and thanks to that I can switch between different environments. This is good for testing, but as mentioned in drive, you need a good separation of contexts in the individual environments.
+
+I can imagine if we do in the workspaces east + west, but the environments (dev, uat, prod) will be separated by directories. Respectively, from dev, files will be copied to `generated_*.tf` while *.tf will serve as overrides in the higher environments. Thats how I can manage large projects in terraform.
+
+![Screenshot 2023-09-05 at 12 02 22](https://github.com/kuritka/_helper/assets/7195836/63f436eb-acf0-49bf-b320-5dbb7d69f9ac)
+
+![Screenshot 2023-09-05 at 12 20 40](https://github.com/kuritka/_helper/assets/7195836/ad7427b8-9a87-4303-b870-da880623b65c)
+
+```shell
+terraform workspace new west
+terraform init
+terraform plan -var-file=_west.tfvars -out=.out.west.tfplan
+terraform apply .out.west.tfplan 
+
+terraform workspace new east
+terraform init
+terraform plan -var-file=_east.tfvars -out=.out.east.tfplan
+terraform apply .out.east.tfplan 
+```
+
