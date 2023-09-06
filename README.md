@@ -176,3 +176,6 @@ terraform plan -var-file=_east.tfvars -out=.out.east.tfplan
 terraform apply .out.east.tfplan 
 ```
 
+## TODO: Robust Design
+combine workspace and environment. West and East clusters will be divided by workspace. Symlinks don't work well in terraform cloud so make a
+process to copy files with prefix generated_ to higher environments. The rest of the .tf files will be overrides. If that's too hard, experiment with git branches 
